@@ -17,6 +17,8 @@ var currentNote = ''
 var currentRow = 0;
 var currentColumn = 0;
 var isMouseDown = false;
+var isTouchDown = false;
+
 var instructionsVisible = true;
 var notes_to_colors = {
     "lowF": "520000",
@@ -74,16 +76,7 @@ blackKeys = [
 $(init)
 
 
-//figure out how to get this to work
 
-var slider = document.getElementById("myRange");
-var output = document.getElementById("demo");
-//output.innerHTML = slider.value; // Display the default slider value
-
-// Update the current slider value (each time you drag the slider handle)
-//slider.oninput = function () {
-//output.innerHTML = this.value;
-//}
 
 
 function init() {
@@ -195,11 +188,6 @@ function listen() {
 
     });
 
-    $('html').on("mousedown", () => {
-        isMouseDown = true
-        //console.log(isMouseDown)
-    })
-
     $("#grid").on("mousedown", () => {
         if (instructionsVisible) {
             instructionsVisible = false;
@@ -253,11 +241,27 @@ function listen() {
         // console.log(tempo)
     })
 
+    $('html').on("mousedown", () => {
+        isMouseDown = true
+        //console.log(isMouseDown)
+    })
 
     $('html').on("mouseup", () => {
         isMouseDown = false
         //console.log(isMouseDown)
     })
+
+
+    $('html').on("touchstart", () => {
+        isTouchDown = true
+        console.log(isTouchDown)
+    })
+
+    $('html').on("touchend", () => {
+        isTouchDown = false
+        console.log(isTouchDown)
+    })
+
 
     $('.key').on("mousedown", function () {
         console.log("playing sound")
@@ -266,7 +270,7 @@ function listen() {
     })
 
     $('#eraser').on("mousedown", function () {
-        console.log("erase")
+        //console.log("erase")
 
         currentNote = "erase";
     })
@@ -293,10 +297,10 @@ function listen() {
 
     })
 
-    $('.cell').on("mousedown mouseenter", function (evt) {
+    $('.cell').on("mousedown mouseenter touchstart touchmove", function (evt) {
         console.log(evt.type)
         clearInterval(sequenceInterval);
-        if (isMouseDown || evt.type == "mousedown") {
+        if (isMouseDown || evt.type == "mousedown" || isTouchDown || evt.type == "touchmove") {
             $(this).css({
                 "background-color": `#${notes_to_colors[currentNote]}`
             }).data("note", currentNote)
