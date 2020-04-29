@@ -1,0 +1,263 @@
+<html>
+
+<head>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="sound.js"></script>
+    <script src="script.js"></script>
+    <script src="resize.js"></script>
+
+    <style>
+        .screen {
+            position: absolute;
+        }
+
+        .key {
+            position: absolute;
+            border: .1rem solid black;
+        }
+
+        .cell {
+            position: absolute;
+        }
+
+
+
+        #keyboard {
+            bottom: 0;
+            position: absolute;
+            width: 100%;
+            height: 25%;
+            background-color: black;
+        }
+
+        #grid {
+            top: 0%;
+            height: 75%;
+            width: 100%;
+            position: absolute;
+        }
+
+        #button {
+            position: absolute;
+            top: 7%;
+            width: 7%;
+            left: 48%;
+
+        }
+
+        #eraser {
+            position: absolute;
+            width: 7%;
+            left: 48%;
+            top: 53%;
+        }
+
+        #info {
+            position: absolute;
+            width: 3%;
+            left: 96%;
+            top: 5%;
+        }
+
+        #instructions {
+            background-color: black;
+            border-style: solid;
+            border-width: 7px;
+            border-color: #888888;
+            position: absolute;
+            width: 50%;
+            height: 50%;
+            top: 12.5%;
+            left: 25%;
+            opacity: 1;
+            z-index: -1;
+            position: relative;
+
+        }
+
+        #welcome,
+        #dir1,
+        #dir2,
+        #dir3,
+        #dir4,
+        #dir5 {
+            margin: auto;
+            width: 99%;
+            left: 1%;
+            text-align: center;
+            color: white;
+            position: absolute;
+            font-size: 1.8vw;
+            display: inline-block;
+            font-family: Arial, Helvetica, sans-serif;
+
+        }
+
+        #welcome {
+            top: 3%;
+            font-size: 3vw;
+        }
+
+        #dir1 {
+            top: 20%;
+        }
+
+        #dir2 {
+            top: 35%;
+            position: relative;
+        }
+
+        #dir3 {
+            top: 65%;
+        }
+
+        #dir4 {
+            top: 80%;
+
+        }
+
+        #dir5 {
+            top: 93%;
+            font-size: 1vw;
+        }
+
+
+
+        body,
+        html {
+            -webkit-user-select: none;
+            /* Chrome all / Safari all */
+            -moz-user-select: none;
+            /* Firefox all */
+            -ms-user-select: none;
+            /* IE 10+ */
+            user-select: none;
+            /* Likely future */
+
+        }
+
+        .slidecontainer {
+            position: absolute;
+            text-align: center;
+            left: 59%;
+            top: 45%;
+            color: white;
+            width: 35%;
+            /* Width of the outside container */
+        }
+
+        /* The slider itself */
+        .slider {
+            -webkit-appearance: none;
+            /* Override default CSS styles */
+            appearance: none;
+            width: 100%;
+            /* Full-width */
+            height: 25px;
+            /* Specified height */
+            background: #ffffff;
+            /* Grey background */
+            outline: none;
+            /* Remove outline */
+
+            height: 15px;
+            border-radius: 10px;
+
+            direction: rtl;
+        }
+
+        /* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            /* Override default look */
+            appearance: none;
+            width: 30px;
+
+            height: 30px;
+            /* Slider handle height */
+            background: #888888;
+            /* Green background */
+            cursor: pointer;
+            /* Cursor on hover */
+
+            border-radius: 50%;
+        }
+
+        .slider::-moz-range-thumb {
+            width: 30px;
+            /* Set a specific slider handle width */
+            height: 30px;
+            /* Slider handle height */
+            background: #888888;
+            /* Green background */
+            cursor: pointer;
+            /* Cursor on hover */
+
+            border-radius: 50%;
+        }
+
+        #tempoTextContainter {
+            position: absolute;
+            text-align: center;
+            left: 59.1%;
+            top: 55%;
+            color: white;
+            width: 35%;
+            height: 45%;
+
+        }
+
+        #tempoText {
+            position: absolute;
+            top: 25%;
+            left: 37%;
+            font-size: 2vw;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="screen">
+        <div id=instructions>
+
+            <div id="welcome">Welcome to Sonic Sketch!</div>
+            <div id="dir1"> Pick a color/note, and draw/compose on your canvas.</div>
+            <div id="dir2"> Press PLAY to hear your piece. </div>
+            <div id="dir2"> Press ERASE to erase pixels on the canvas. </div>
+            <div id="dir2"> Press the SPACE key to clear the canvas.</div>
+            <div id="dir3"> Use the slider to change the tempo</div>
+            <div id="dir4"> Press INFO to toggle the directions.</div>
+            <div id="dir5"> Designed by Boris Kish</div>
+
+
+
+
+        </div>
+        <div id="grid"></div>
+
+        <div id="keyboard">
+            <div id="playButton"> <img id="button" src="data/playButton.png"> </div>
+            <div id="eraseButton"> <img id="eraser" src="data/eraseButton.png"> </div>
+            <div id="infoButton"> <img id="info" src="data/infoButton.png"> </div>
+
+
+            <div class="slidecontainer">
+                <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
+            </div>
+            <div id="tempoTextContainter">
+                <div id="tempoText">
+                    <span id="demo">Moderato</span>
+                </div>
+            </div>
+
+
+
+
+        </div>
+    </div>
+
+</body>
+
+</html>
