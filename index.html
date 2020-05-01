@@ -1,10 +1,7 @@
 <html>
 
 <head>
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-    <script src="sound.js"></script>
-    <script src="script.js"></script>
-    <script src="resize.js"></script>
+    <link href="alert.css" type="text/css" rel="stylesheet">
 
     <style>
         .screen {
@@ -18,9 +15,9 @@
 
         .cell {
             position: absolute;
+            background-color: white;
+            border: hidden;
         }
-
-
 
         #keyboard {
             bottom: 0;
@@ -70,7 +67,7 @@
             top: 5%;
             left: 20%;
             opacity: 1;
-            z-index: -1;
+            z-index: 2;
             position: relative;
 
             text-overflow: ellipsis;
@@ -272,5 +269,12 @@
     </div>
 
 </body>
+
+<script src="alert.js"></script>
+<script src="jquery-3.4.1.min.js"></script>
+<script src="sound.js"></script>
+<script src="script.js"></script>
+<script src="resize.js"></script>
+
 
 </html>

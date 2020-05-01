@@ -1,17 +1,26 @@
 var checkForLoad = countLoaded();
 
 function preloadAudio() {
-    var dfd = jQuery.Deferred();
+    //    alert("preloud audio 1");
+    //    alert("preloud audio 2");
+    var dfd = $.Deferred();
+
     for (var key of Object.keys(soundFiles)) {
         var audio = new Audio();
         // once this file loads, it will call loadedAudio()
         // the file will be kept by the browser as cache
-        audio.addEventListener('canplaythrough', () => checkForLoad(dfd), false);
+        audio.addEventListener('canplaythrough', function () {
+            checkForLoad(dfd)
+        }, false);
         audio.src = `data/${soundFiles[key]}`;
         audio.load()
     }
 
-    return dfd.promise();
+    //    setTimeout(function () {
+    //        dfd.resolve("resolved")
+    //    }, 1000);
+
+    return dfd;
 }
 
 function countLoaded() {

@@ -1,3 +1,9 @@
+window.onload = myAlert;
+
+function myAlert() {
+    alert("script");
+}
+
 const gridSizeX = 50;
 const cellSizeX = 100 / gridSizeX;
 
@@ -72,24 +78,26 @@ blackKeys = [
 
 
 
-
-$(init)
+//alert("script start");
+window.onload = init;
+//$(init)
 
 
 
 
 
 function init() {
-    preloadAudio().then(() => {
+
+    preloadAudio().then(function () {
+        //alert("init");
         drawWhiteKeys()
         drawBlackKeys()
         drawGrid()
-
-        setTimeout(() => listen(), 1000);
+        setTimeout(function () {
+            listen()
+        }, 1000);
     })
 }
-
-
 
 
 
@@ -181,14 +189,14 @@ function listen() {
 
     $('#playButton').on("click", playCell)
 
-    $("body").on('keypress', (evt) => {
+    $("body").on('keypress', function (evt) {
         if (evt.code == "Space") {
             clearGrid();
         }
 
     });
 
-    $("#grid").on("mousedown", () => {
+    $("#grid").on("mousedown", function () {
         if (instructionsVisible) {
             instructionsVisible = false;
             console.log("no more instructions!")
@@ -241,23 +249,23 @@ function listen() {
         // console.log(tempo)
     })
 
-    $('html').on("mousedown", () => {
+    $('html').on("mousedown", function () {
         isMouseDown = true
         //console.log(isMouseDown)
     })
 
-    $('html').on("mouseup", () => {
+    $('html').on("mouseup", function () {
         isMouseDown = false
         //console.log(isMouseDown)
     })
 
 
-    $('html').on("touchstart", () => {
+    $('html').on("touchstart", function () {
         isTouchDown = true
         console.log(isTouchDown)
     })
 
-    $('html').on("touchend", () => {
+    $('html').on("touchend", function () {
         isTouchDown = false
         console.log(isTouchDown)
     })
