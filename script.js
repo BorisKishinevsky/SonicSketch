@@ -158,7 +158,7 @@ function drawGrid() {
         for (j = 0; j < gridSizeY; j++) {
 
             var cell = $("<div/>", {
-                "id": `Cell${i}_${j}`,
+                "id": `Cell_${i}_${j}`,
                 "class": "cell"
             }).css({
                 "left": `${i*cellSizeX}%`,
@@ -176,7 +176,7 @@ function drawGrid() {
 function clearGrid() {
     for (i = 0; i < gridSizeX; i++) {
         for (j = 0; j < gridSizeY; j++) {
-            $(`#Cell${i}_${j}`).css({
+            $(`#Cell_${i}_${j}`).css({
                 "background-color": "white"
             }).data("note", "");
         }
@@ -249,26 +249,26 @@ function listen() {
         // console.log(tempo)
     })
 
-    $('html').on("mousedown", function () {
+    $('html').on("mousedown touchstart", function () {
         isMouseDown = true
         //console.log(isMouseDown)
     })
 
-    $('html').on("mouseup", function () {
+    $('html').on("mouseup touchend", function () {
         isMouseDown = false
         //console.log(isMouseDown)
     })
 
-
-    $('html').on("touchstart", function () {
-        isTouchDown = true
-        console.log(isTouchDown)
-    })
-
-    $('html').on("touchend", function () {
-        isTouchDown = false
-        console.log(isTouchDown)
-    })
+    //
+    //    $('html').on("touchstart", function () {
+    //        isTouchDown = true
+    //        console.log("touch is " + isTouchDown)
+    //    })
+    //
+    //    $('html').on("touchend", function () {
+    //        isTouchDown = false
+    //        console.log("touch is " + isTouchDown)
+    //    })
 
 
     $('.key').on("mousedown", function () {
@@ -302,17 +302,36 @@ function listen() {
                 'z-index': -1
             });
         }
-
     })
 
     $('.cell').on("mousedown mouseenter touchstart touchmove", function (evt) {
-        console.log(evt.type)
-        clearInterval(sequenceInterval);
-        if (isMouseDown || evt.type == "mousedown" || isTouchDown || evt.type == "touchmove") {
-            $(this).css({
-                "background-color": `#${notes_to_colors[currentNote]}`
-            }).data("note", currentNote)
+
+
+        if (evt.touches) {
+            var gridColumn = parseInt(gridSizeY * (evt.touches[0].pageY / gridHeight));
+            var gridRow = parseInt(gridSizeX * (evt.touches[0].pageX / gridWidth));
+            //            console.log("width:");
+            //            console.log(evt.touches[0].pageX);
+            //            console.log(gridWidth);
+            //            console.log("height:");
+            //            console.log(evt.touches[0].pageY);
+            //            console.log(gridHeight);
+        } else {
+          [, gridRow, gridColumn] = $(this)[0].id.split("_");
         }
+        var selector = `#Cell_${gridRow}_${gridColumn}`;
+        var cellCss = {
+            "background-color": `#${notes_to_colors[currentNote]}`
+        };
+        console.log(selector);
+        console.log(cellCss);
+
+        clearInterval(sequenceInterval);
+        if (isMouseDown || evt.type == "mousedown" || evt.type == "touchmove") {
+            console.log("drawing");
+            $(selector).css(cellCss).data("note", currentNote)
+        }
+
     })
 
 
@@ -320,24 +339,26 @@ function listen() {
 }
 
 function playCell() {
-    console.log("playCell activated")
+    //alert("playCell activated");
     clearInterval(sequenceInterval);
-    $("#button").attr("src", "data/soundButton.png")
+    $("#button").attr("src", "data/soundButton.png");
     console.log("The tempo is " + tempo);
-    sequenceInterval = setInterval(makeNoise, tempo)
+    sequenceInterval = setInterval(makeNoise, tempo);
 
 }
 
 function makeNoise() {
+    //alert(`Cell activated: " ${currentRow} ,  ${currentColumn}`);
 
-    var note = $(`#Cell${currentRow}_${currentColumn}`).data("note")
+    var note = $(`#Cell_${currentRow}_${currentColumn}`).data("note");
     if (note) {
-        playSound(note)
+        // alert(`${note} before playSound`);
+        playSound(note);
     }
     currentRow++
     if (currentRow > gridSizeX) {
-        currentRow = 0
-        currentColumn++
+        currentRow = 0;
+        currentColumn++;
     }
     if (currentColumn > gridSizeY) {
         currentRow = 0;

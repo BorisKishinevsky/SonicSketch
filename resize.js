@@ -1,3 +1,6 @@
+var gridWidth;
+var gridHeight;
+
 $(function () {
     resizeWindow();
 });
@@ -9,12 +12,14 @@ $(window).resize(function () {
 
 // Resize the window
 function resizeWindow() {
-    var aspectRatio = 3/2;
+
+
+    var aspectRatio = 3 / 2;
     // Get window width and height
     var w = $(window).width();
     var h = $(window).height();
-    
-	console.log(w,h);
+
+    console.log(w, h);
     // If the aspect ratio is greater than or equal to 4:3, fix height and set width based on height
     if ((w / h) >= aspectRatio) {
         stageHeight = h;
@@ -29,7 +34,7 @@ function resizeWindow() {
     // If the aspect ratio is less than 4:3, fix width and set height based on width
     else {
         stageWidth = w;
-        stageHeight = (1/aspectRatio) * w;
+        stageHeight = (1 / aspectRatio) * w;
         stageTop = (h - stageHeight) / 2;
         stageLeft = 0;
         coverTop = stageTop;
@@ -39,15 +44,20 @@ function resizeWindow() {
     }
 
     // Set "screen" object width and height to stageWidth and stageHeight, and center screen
-    stageTop=0; //never vertically align
-	$(".screen").css({
+    stageTop = 0; //never vertically align
+    $(".screen").css({
         width: stageWidth + "px",
         height: stageHeight + "px",
         left: stageLeft + "px",
         top: stageTop + "px"
     });
 
- 
+
     $("html").css("font-size", (stageHeight / 60) + "px");
+
+    gridHeight = $("#grid").height();
+    gridWidth = $("#grid").width();
+
+
 
 }

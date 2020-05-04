@@ -1,4 +1,15 @@
 var checkForLoad = countLoaded();
+var ringLen = 5;
+var audioRing = [];
+var currentRingIndex = 0;
+var firstSound = true;
+
+for (var c = 0; c < ringLen; c++) {
+    audioRing.push(new Audio());
+
+}
+
+var audio = new Audio();
 
 function preloadAudio() {
     //    alert("preloud audio 1");
@@ -6,7 +17,6 @@ function preloadAudio() {
     var dfd = $.Deferred();
 
     for (var key of Object.keys(soundFiles)) {
-        var audio = new Audio();
         // once this file loads, it will call loadedAudio()
         // the file will be kept by the browser as cache
         audio.addEventListener('canplaythrough', function () {
@@ -34,9 +44,24 @@ function countLoaded() {
 }
 
 function playSound(note) {
-    var soundFile = soundFiles[note]
+
+    soundFile = soundFiles[note];
+    if (firstSound) {
+        for (var c = 0; c < ringLen; c++) {
+            audioRing[c].src = `data/${soundFile}`;
+            audioRing[c].load();
+        }
+        firstSound = false;
+    }
+
+
     if (soundFile) {
-        var audio = new Audio(`data/${soundFile}`);
-        audio.play();
+        audioRing[currentRingIndex].src = `data/${soundFile}`;
+        audioRing[currentRingIndex].load();
+
+        //var audio = new Audio(`data/${soundFile}`);
+        // alert(`${soundFile} inside playSound`);
+        audioRing[currentRingIndex].play();
+        currentRingIndex = (currentRingIndex + 1) % ringLen;
     }
 }
